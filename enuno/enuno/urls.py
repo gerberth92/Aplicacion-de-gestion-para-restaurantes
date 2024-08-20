@@ -5,17 +5,13 @@ from caja.views import list_caja, retrieve_caja
 from pedidos.views import list_pedidos, retrieve_pedidos
 from usuarios.views import UsuariosList, UsuariosDetail
 from cargos.views import CargosList, CargosDetail
-from login.views import CustomTokenObtainPairView, CustomTokenRefreshView, LoginView
+from login.views import LoginView
 from mesa.views import MesaList, MesaDetail
 from ordenes.views import OrdenesList, OrdenesDetail
 from restaurantes.views import RestList, RestDetail
 
 
 urlpatterns = [
-    # URLs para la autenticación y gestión de tokens
-    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
-    
     # URL para el login
     path('api/login/', LoginView.as_view(), name='login'),
     

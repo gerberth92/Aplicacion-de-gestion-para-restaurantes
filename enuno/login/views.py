@@ -1,17 +1,9 @@
 from rest_framework import status, permissions, generics
 from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+from usuarios.models import Usuarios
+from restaurantes.models import Corp
 from .serializers import LoginSerializer
 
-
-# Vistas para el modelo Corp
-class CustomTokenObtainPairView(TokenObtainPairView):
-    permission_classes = [permissions.AllowAny]
-
-class CustomTokenRefreshView(TokenRefreshView):
-    permission_classes = [permissions.AllowAny]
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -20,33 +12,53 @@ class LoginView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         username = request.data.get("username")
         password = request.data.get("password")
-        user = authenticate(username=username, password=password)
 
-        if username == 'admin' and password == 'admin':
-            refresh = RefreshToken.for_user(user)
+        if username == "corp" and password == "corp":
             return Response(
                 {
                     "success": True,
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
                     "user": {
-                        "username": "admin",
+                        "username": "corp",
                         "role": "corp"
                     }
-                }
+                }, status=status.HTTP_200_OK
             )
-        if user is not None:
-            refresh = RefreshToken.for_user(user)
+
+        def get_usuario():
+            try:
+                return Usuarios.objects.get(user=username, cont=password)
+            except Usuarios.DoesNotExist:
+                return None
+
+        def get_corp():
+            try:
+                return Corp.objects.get(user=username, contrasena=password)
+            except Corp.DoesNotExist:
+                return None
+            
+        usuario = get_usuario()
+        corp = get_corp()
+
+        if usuario:
             return Response(
                 {
                     "success": True,
-                    "refresh": str(refresh),
-                    "access": str(refresh.access_token),
                     "user": {
-                        "username": "admin",
-                        "role": "corp"
+                        "username": usuario.user,
+                        "role": usuario.puesto
                     }
-                }
+                }, status=status.HTTP_200_OK
+            )
+    
+        if corp:
+            return Response(
+                {
+                    "success": True,
+                    "user": {
+                        "username": corp.user,
+                        "role": "admin"
+                    }
+                }, status=status.HTTP_200_OK
             )
         return Response(
             {"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
