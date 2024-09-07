@@ -7,9 +7,9 @@ import { crearFila } from "./Funciones";
 export default function Table({ body, setBody, nuevaFila, setNuevaFila, editarFila, setEditarFila, valor }) {
   return (
     <table className="">
-      <thead className="">
+      <thead>
         <tr className="bg-celeste text-center">
-          <th className="rounded-tl"></th>
+          <th className="rounded-tl w-2"></th>
           <th className="text-white p-2">Id</th>
           <th className="text-white w-10">Razón Social</th>
           <th className="text-white w-6">Nombre</th>
@@ -20,7 +20,7 @@ export default function Table({ body, setBody, nuevaFila, setNuevaFila, editarFi
           <th className="text-white w-6">Membresía</th>
           <th className="rounded-tr">
             <button className="text-white border-0 bg-transparent"
-            type="button"
+              type="button"
               onClick={() => crearFila(nuevaFila, setNuevaFila)}>+</button>
           </th>
         </tr>

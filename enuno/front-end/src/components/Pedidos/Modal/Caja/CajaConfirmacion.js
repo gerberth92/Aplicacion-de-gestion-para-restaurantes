@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import check from '../../../../assets/icons8-check-mark-50-verde.png';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Componente CajaConfirmacion: muestra un modal con un mensaje de confirmacion.
@@ -9,6 +10,8 @@ import check from '../../../../assets/icons8-check-mark-50-verde.png';
 */
 
 export default function CajaConfirmacion({ isOpen, onRequestClose }) {
+  const navigate = useNavigate();
+
   const mod = {
     content: {
       width: '40%',
@@ -25,10 +28,15 @@ export default function CajaConfirmacion({ isOpen, onRequestClose }) {
     },
   };
 
+  const close = () => {
+    onRequestClose();
+    navigate('/pedidos');
+  };
+
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={close}
       contentLabel="Modal"
       style={mod}>
       <div>
@@ -36,7 +44,8 @@ export default function CajaConfirmacion({ isOpen, onRequestClose }) {
           <img src={check}></img>
           <p className='fs-4'><strong>¡Buen trabajo!</strong></p>
           <p className='fs-5'>El pedido se envió a caja</p>
-          <button className='border-0 bg-verde rounded-2 py-1 w-10 text-white'>
+          <button className='border-0 bg-verde rounded-2 py-1 w-10 text-white'
+            onClick={close}>
             Finalizar</button>
         </div>
       </div>

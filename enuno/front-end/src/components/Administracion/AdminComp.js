@@ -15,6 +15,7 @@ export default function AdminComp() {
   const [showEmpleados, setShowEmpleados] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showEstado, setShowEstado] = useState(true);
+  const [mesas, setMesas] = useState([]);
 
   return (
     <>
@@ -24,7 +25,7 @@ export default function AdminComp() {
           <img width="30" height="30" src={mesa} alt="mesa">
           </img>
         </button>
-        <p className="mx-1">0</p>
+        <p className="mx-1">{mesas.length}</p>
       </div>
       <div className="d-flex flex-column">
         <div className="mt-5 mb-4 m-auto">
@@ -52,12 +53,13 @@ export default function AdminComp() {
             }}>
             EMPLEADOS</button>
         </div>
-        {showEstado && <Estado />}
+        {showEstado && <Estado setMesas={setMesas} mesas={mesas} />}
         {showMenu && <Menu />}
         {showEmpleados && <Empleados />}
         <Mesa
           isOpen={showVentana}
-          onRequestClose={() => setShowVentana(false)} />
+          onRequestClose={() => setShowVentana(false)}
+          setMesas={setMesas} />
       </div>
     </>
   );

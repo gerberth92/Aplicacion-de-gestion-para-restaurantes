@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import instance from '../../../../conexion';
 
 /**
  * Componente CajaEnvio: muestra un modal con una pregunta.
@@ -24,6 +25,25 @@ export default function CajaEnvio({ isOpen, onRequestClose, confir }) {
     },
   };
 
+  async function actualizar() {
+    try {
+      const data = {
+        estado_enum_ocupada_disponible_field: 'disponible',
+        id_mozo: null,
+        id_pedido: null
+      }
+      await instance.patch(`mesas/${localStorage.getItem('id_mesa')}/`, data)
+
+      const data_pedido = {
+        estado: 'finalizado'
+      }
+
+      await instance.patch(`pedidos/${localStorage.getItem('id_pedido')}/`, data_pedido)
+    } catch (error) {
+      console.error('Error al actualizar la mesa o pedido:', error);
+    }
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -36,6 +56,7 @@ export default function CajaEnvio({ isOpen, onRequestClose, confir }) {
         <button
           onClick={() => {
             onRequestClose();
+            actualizar();
             confir();
           }}
           className='border-0 bg-azul rounded-2 py-1 w-10 text-white me-3'>

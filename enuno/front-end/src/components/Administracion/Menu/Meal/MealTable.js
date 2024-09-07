@@ -1,23 +1,33 @@
 import React from "react";
 import Tbody from "./Tbody";
+import { crearFila_meal } from "./funcionesMeal";
 
-//Componente que contiene la tabla de platos.
+//Componente que contiene la tabla de bebidas.
 
-export default function MealTable() {
+export default function MealTable({ body_meal, setBody_meal, nuevaFila_meal, setNuevaFila_meal, editarFila_meal, setEditarFila_meal, valor_meal }) {
   return (
     <table>
-      <thead className="">
+      <thead>
         <tr className="bg-celeste text-center">
-          <th className="rounded-tl"></th>
-          <th className="text-white p-2">Id</th>
-          <th className="text-white">Plato</th>
-          <th className="text-white">Precio</th>
+          <th className="rounded-tl w-2"></th>
+          <th className="text-white w-10">Alimentos</th>
+          <th className="text-white w-6">Precio</th>
           <th className="rounded-tr">
-            <button className="text-white border-0 bg-transparent">+</button>
+            <button className="text-white border-0 bg-transparent w-6"
+              type="button"
+              onClick={() => crearFila_meal(nuevaFila_meal, setNuevaFila_meal)}>+
+            </button>
           </th>
         </tr>
       </thead>
-      <Tbody />
+      <Tbody
+        body_meal={body_meal}
+        setBody_meal={setBody_meal}
+        nuevaFila_meal={nuevaFila_meal}
+        setNuevaFila_meal={setNuevaFila_meal}
+        editarFila_meal={editarFila_meal}
+        setEditarFila_meal={setEditarFila_meal}
+        valor_meal={valor_meal} />
     </table>
   );
 }

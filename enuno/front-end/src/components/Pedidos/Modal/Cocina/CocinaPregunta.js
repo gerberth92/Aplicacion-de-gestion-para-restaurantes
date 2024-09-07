@@ -33,20 +33,17 @@ export default function CocinaPregunta({ isOpen, onRequestClose, confir, pagar }
       pagar={pagar}
       contentLabel="Modal"
       style={mod}>
-      <p className='txt-gris my-4 fs-4'>¿Seguir con el proceso de envio del pedido?</p>
+      <p className='txt-gris my-4 fs-4'>¿Seguir con el proceso de envio de la orden?</p>
       <div className='d-flex mt-3'>
-        <button
+        <button className='border-0 bg-azul rounded-2 py-1 w-10 text-white me-3'
+          type='submit'
           onClick={() => {
             onRequestClose();
             confir();
             pagar();
-          }}
-          className='border-0 bg-azul rounded-2 py-1 w-10 text-white me-3'>
-          SEGUIR</button>
-        <button
-          onClick={() => onRequestClose()}
-          className='border-0 bg-naranja rounded-2 py-1 w-10 text-white'>
-          NO SEGUIR</button>
+          }}>SEGUIR</button>
+        <button className='border-0 bg-naranja rounded-2 py-1 w-10 text-white'
+          onClick={() => onRequestClose()}>NO SEGUIR</button>
       </div>
     </Modal>
   );

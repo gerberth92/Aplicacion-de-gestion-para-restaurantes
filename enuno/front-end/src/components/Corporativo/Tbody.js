@@ -75,8 +75,8 @@ export default function Tbody({ body, setBody, nuevaFila, setNuevaFila, editarFi
               <input className="rounded-3 border border-2 border-gris w-10"
                 type="text"
                 value={editarFila.razon_social}
-                onChange={(e) => cambios(e, 'razon_social', editarFila, setEditarFila, nuevaFila, setNuevaFila)}></input
-              >
+                onChange={(e) => cambios(e, 'razon_social', editarFila, setEditarFila, nuevaFila, setNuevaFila)}>
+              </input>
             </td>
             <td>
               <input className="rounded-3 border border-2 border-gris w-6"

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import instance from '../conexion';
 
 // Crea un contexto de autenticación
 const AuthContext = React.createContext();
@@ -19,12 +19,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       // Realiza una solicitud POST a la API de Django para autenticar al usuario
-      const response = await axios.post('http://localhost:8000/api/login/', { username, password });
+      const response = await instance.post('login/', { username, password });
       if (response.data.success) {
         // Si la autenticación es exitosa, guarda la información del usuario en el estado y en localStorage
         setCurrentUser(response.data.user);
         localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-        localStorage.setItem('token', response.data.access);
       } else {
         // Muestra un mensaje de error si las credenciales son incorrectas
         alert(response.data.message);
@@ -40,7 +39,8 @@ export const AuthProvider = ({ children }) => {
     // Limpia el estado del usuario actual y elimina la información del usuario de localStorage
     setCurrentUser(null);
     localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
+    localStorage.removeItem('id_mesa');
+    localStorage.removeItem('id_pedido');
   };
 
   // Efecto que se ejecuta al cargar el componente para verificar si el usuario ya está autenticado

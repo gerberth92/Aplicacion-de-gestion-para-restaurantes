@@ -24,7 +24,7 @@ export default function LoginComp() {
         case 'admin':
           navigate('/admin');
           break;
-        case 'pedidos':
+        case 'mozo':
           navigate('/pedidos');
           break;
         case 'cocina':
