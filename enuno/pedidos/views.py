@@ -23,8 +23,9 @@ def list_pedidos(request):
         - JSON con los detalles del nuevo pedido creado o errores de validación para POST.
     """
     if request.method == "GET":
-        queryset = Pedidos.objects.all()
-        serializer = PedidosSerializer(queryset, many=True)
+        id_rest = request.GET.get('id_rest')
+        pedidos = Pedidos.objects.filter(id_restaurante=id_rest)
+        serializer = PedidosSerializer(pedidos, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == "POST":

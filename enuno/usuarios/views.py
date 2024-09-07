@@ -7,7 +7,12 @@ from .serializers import UsuariosSerializer
 
 class UsuariosList(APIView):
     def get(self, request):
-        usuarios = Usuarios.objects.all()
+        id_rest = request.query_params.get('id_rest')
+
+        if not id_rest:
+            return Response({'error': 'El ID del restaurante es requerido.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        usuarios = Usuarios.objects.filter(id_restaurante_id=id_rest)
         serializer = UsuariosSerializer(usuarios, many=True)
         return Response(serializer.data)
 

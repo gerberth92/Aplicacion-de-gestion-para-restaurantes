@@ -26,9 +26,15 @@ def alimentos_list(request):
         para errores de validación, se devuelve un estado 400.
     """
     if request.method == 'GET':
-        queryset = Alimentos.objects.all()
-        serializer = AlimentosSerializer(queryset, many=True)
+        id_rest = request.GET.get('id_rest')
+        
+        if not id_rest:
+            return JsonResponse({'error': 'El ID del restaurante es requerido.'}, status=400)
+        
+        alimentos = Alimentos.objects.filter(id_restaurante_id=id_rest)
+        serializer = AlimentosSerializer(alimentos, many=True)
         return JsonResponse(serializer.data, safe=False)
+
     elif request.method == 'POST':
         data = json.loads(request.body)
         serializer = AlimentosSerializer(data=data)

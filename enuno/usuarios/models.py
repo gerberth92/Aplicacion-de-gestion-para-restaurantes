@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from restaurantes.models import Corp
 
 
 class Usuarios(models.Model):
@@ -52,9 +53,11 @@ class Usuarios(models.Model):
         blank=False,
     )
 
+    id_restaurante = models.ForeignKey(Corp, on_delete=models.CASCADE, db_column='id_restaurante', null=True)
+
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.user = f"{self.nombre[:4].lower()}{self.dni}.{self.puesto}"
+            self.user = f"{self.nombre[:4].lower()}{self.dni[:4]}.{self.puesto}"
         self.nombre = self.nombre.lower()
         self.apellido = self.apellido.lower()
         super().save(*args, **kwargs)

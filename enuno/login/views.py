@@ -45,6 +45,8 @@ class LoginView(generics.GenericAPIView):
                     "success": True,
                     "user": {
                         "username": usuario.user,
+                        "id_restaurante": usuario.id_restaurante.id,
+                        "id_mozo": usuario.id,
                         "role": usuario.puesto
                     }
                 }, status=status.HTTP_200_OK
@@ -56,6 +58,7 @@ class LoginView(generics.GenericAPIView):
                     "success": True,
                     "user": {
                         "username": corp.user,
+                        "id_restaurante": corp.id,
                         "role": "admin"
                     }
                 }, status=status.HTTP_200_OK

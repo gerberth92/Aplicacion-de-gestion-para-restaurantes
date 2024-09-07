@@ -64,8 +64,10 @@ class Corp(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            self.user = f"{self.nombre[:4].lower()}{self.dni}.admin"
+        if self.pk:
+            self.user = f"{self.nombre[:4].lower()}{self.dni[:4]}.admin"
+        else:
+            self.user = f"{self.nombre[:4].lower()}{self.dni[:4]}.admin"
         self.razon_social = self.razon_social.lower()
         self.nombre = self.nombre.lower()
         self.apellido = self.apellido.lower()

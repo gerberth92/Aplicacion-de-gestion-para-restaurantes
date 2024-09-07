@@ -26,8 +26,13 @@ def list_bebidas(request):
           el JSON enviado.
     """
     if request.method == "GET":
-        queryset = Bebidas.objects.all()
-        serializer = BebidasSerializer(queryset, many=True)
+        id_rest = request.GET.get('id_rest')
+        
+        if not id_rest:
+            return JsonResponse({'error': 'El ID del restaurante es requerido.'}, status=400)
+        
+        bebidas = Bebidas.objects.filter(id_restaurante_id=id_rest)
+        serializer = BebidasSerializer(bebidas, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == "POST":
